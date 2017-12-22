@@ -19,9 +19,9 @@ namespace QuoteBook.Services.AdminService.Implementations
             this.db = db;
         }
 
-        public async Task<IEnumerable<AdminUserListingServiceModel>> All()
+        public async Task<IEnumerable<AdminUserListingServiceModel>> All(string adminId)
         => await this.db
-            .Users
+            .Users.Where(u=>u.Id!=adminId)
             .ProjectTo<AdminUserListingServiceModel>()
             .ToListAsync();
     }

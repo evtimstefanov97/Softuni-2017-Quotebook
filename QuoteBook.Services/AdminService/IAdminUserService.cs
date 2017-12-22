@@ -9,6 +9,6 @@ namespace QuoteBook.Services.AdminService
 {
     public interface IAdminUserService
     {
-        Task<IEnumerable<AdminUserListingServiceModel>> All();
+        Task<IEnumerable<AdminUserListingServiceModel>> All(string adminId);
     }
 }

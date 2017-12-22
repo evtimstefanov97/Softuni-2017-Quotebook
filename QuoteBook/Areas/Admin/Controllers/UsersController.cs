@@ -30,7 +30,7 @@ namespace QuoteBook.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await this.users.All();
+            var users = await this.users.All(this.userManager.GetUserId(User));
        
          
             return View(new AdminUserListingViewModel

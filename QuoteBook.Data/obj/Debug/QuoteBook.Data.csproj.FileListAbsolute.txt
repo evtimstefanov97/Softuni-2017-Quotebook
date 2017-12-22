@@ -112,3 +112,5 @@ C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Data\bin\Debug\Microsoft.EntityF
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Data\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Data\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Data\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.xml
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Data\bin\Debug\QuoteBook.Data.dll.CodeAnalysisLog.xml
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Data\bin\Debug\QuoteBook.Data.dll.lastcodeanalysissucceeded

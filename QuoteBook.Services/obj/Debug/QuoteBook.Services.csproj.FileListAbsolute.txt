@@ -133,8 +133,6 @@ C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\System.Collec
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\System.Interactive.Async.xml
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
-C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml
-C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.Extensions.Identity.Stores.xml
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\obj\Debug\QuoteBook.Services.csprojResolveAssemblyReference.cache
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\obj\Debug\QuoteBook.Services.csproj.CoreCompileInputs.cache
