@@ -67,7 +67,7 @@ namespace QuoteBook.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation(WebConstants.UserLoggedIn);
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -76,12 +76,12 @@ namespace QuoteBook.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning(WebConstants.UserAccountLockedOut);
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, WebConstants.InvalidLogInAttempt);
                     return View(model);
                 }
             }
@@ -99,7 +99,7 @@ namespace QuoteBook.Controllers
 
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
+                throw new ApplicationException(WebConstants.TwoFactorAuthenticationFailure);
             }
 
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
@@ -130,18 +130,18 @@ namespace QuoteBook.Controllers
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID {UserId} logged in with 2fa.", user.Id);
+                _logger.LogInformation(WebConstants.UserLoggedInWithTwoFactor, user.Id);
                 return RedirectToLocal(returnUrl);
             }
             else if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                _logger.LogWarning(WebConstants.UserAccountWithIdLockedOut, user.Id);
                 return RedirectToAction(nameof(Lockout));
             }
             else
             {
-                _logger.LogWarning("Invalid authenticator code entered for user with ID {UserId}.", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                _logger.LogWarning(WebConstants.InvalidAuthenticationCodeEnteredForUser, user.Id);
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidAuthenticatorCode);
                 return View();
             }
         }
@@ -154,7 +154,7 @@ namespace QuoteBook.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
+                throw new ApplicationException(WebConstants.TwoFactorAuthenticationUserLoadFail);
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -175,7 +175,7 @@ namespace QuoteBook.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load two-factor authentication user.");
+                throw new ApplicationException(WebConstants.TwoFactorAuthenticationUserLoadFail);
             }
 
             var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
@@ -184,18 +184,18 @@ namespace QuoteBook.Controllers
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
+                _logger.LogInformation(WebConstants.UserLoggedInWithRecoveryCode, user.Id);
                 return RedirectToLocal(returnUrl);
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
+                _logger.LogWarning(WebConstants.UserAccountWithIdLockedOut, user.Id);
                 return RedirectToAction(nameof(Lockout));
             }
             else
             {
-                _logger.LogWarning("Invalid recovery code entered for user with ID {UserId}", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                _logger.LogWarning(WebConstants.InvalidRecoveryCodeEnteredForUser, user.Id);
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidRecoveryCodeEntered);
                 return View();
             }
         }
@@ -237,14 +237,14 @@ namespace QuoteBook.Controllers
                 await _userManager.AddToRoleAsync(user, WebConstants.AuthorRole);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation(WebConstants.UserCreatedNewAccount);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation(WebConstants.UserCreatedNewAccount);
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -259,7 +259,7 @@ namespace QuoteBook.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
+            _logger.LogInformation(WebConstants.UserLoggedOut);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -294,7 +294,7 @@ namespace QuoteBook.Controllers
             if (result.Succeeded)
             {
                
-                _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
+                _logger.LogInformation(WebConstants.UserLoggedInWithProvider, info.LoginProvider);
                
 
                 return RedirectToLocal(returnUrl);
@@ -326,7 +326,7 @@ namespace QuoteBook.Controllers
                 var info = await _signInManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    throw new ApplicationException("Error loading external login information during confirmation.");
+                    throw new ApplicationException(WebConstants.ErrorLoadingExternalLoginInformation);
                 }
                 var identifier = info?.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
                 var picture = $"https://graph.facebook.com/{identifier}/picture?type=large";
@@ -342,7 +342,7 @@ namespace QuoteBook.Controllers
                     {
                         
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        _logger.LogInformation(WebConstants.UserCreatedAccountWithProvider, info.LoginProvider);
                         return RedirectToLocal(returnUrl);
                     }
                 }

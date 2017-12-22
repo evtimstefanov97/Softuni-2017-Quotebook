@@ -48,7 +48,7 @@ namespace QuoteBook.Areas.Admin.Controllers
 
             if (!roleExists || !userExists)
             {
-                ModelState.AddModelError(string.Empty, "Invalid identity details /role or user/.");
+                ModelState.AddModelError(string.Empty,WebConstants.InvalidIdentityDetailsOrUser);
             }
 
             if (!ModelState.IsValid)
@@ -59,8 +59,8 @@ namespace QuoteBook.Areas.Admin.Controllers
 
             await this.userManager.RemoveFromRolesAsync(user, roles);
             await this.userManager.AddToRoleAsync(user, model.Role);
-          
-            TempData.AddSuccessMessage($"User {user.UserName}'s role has been set to {model.Role} successfully.");
+
+            TempData.AddSuccessMessage(String.Format(WebConstants.TempDataUserRoleSuccessfullChange, user.Name, model.Role));
 
             return RedirectToAction(nameof(Index));
         }

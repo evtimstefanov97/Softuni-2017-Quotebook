@@ -49,7 +49,7 @@ namespace QuoteBook.Areas.Quote.Controllers
                 var userId = this.User.GetUserId();
                 var userQuotes = await this.postsService.AllByUser(userId);
 
-                return PartialView(userQuotes);
+                return View(userQuotes);
         }
         public async Task<IActionResult> Details(string id)
         {
