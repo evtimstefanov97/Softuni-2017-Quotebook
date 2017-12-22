@@ -8,10 +8,18 @@
 @inject UserManager<User> UserManager
 @model IEnumerable<QuoteBook.Services.PostsService.Models.PostsListingModel>
 
+@if (Model.Count() == 0)
+{
 
+    <div class="jumbotron">
+        <p>There are no quotes from this category</p>
+    </div>
+}
+else
+{
 
     @foreach (var post in Model)
-            {
+    {
         <div class="col-md-12 col-sm-12">
             <article class="">
                 <h2>
@@ -31,7 +39,7 @@
                 <p style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:15px;font-style:italic;text-indent:25px;color: #d94020;font-weight:bold;display:block;word-wrap:break-word;width:100%">@post.Quote</p>
                 <h4>Date: @($"{post.Created.DayOfWeek}, {post.Created.Month}/{post.Created.Day}/{post.Created.Year} {post.Created.Hour}:{post.Created.Minute}")</h4>
                 <h4>Inspirator: @(post.Inspirator != null ? post.Inspirator.Name : "missing")</h4>
-                <h4>Category: @(post.Category!=null?post.Category.Title:"missing category")</h4>
+                <h4>Category: @(post.Category != null ? post.Category.Title : "missing category")</h4>
                 <h3>
                     @if (post.Inspirator?.Image?.Length > 0)
                     {
@@ -93,3 +101,4 @@
 
 
     }
+}

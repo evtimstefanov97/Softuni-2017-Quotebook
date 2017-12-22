@@ -20,6 +20,7 @@ namespace QuoteBook.Services.InspiratorService.Models
 
         [Display(Name="Born")]
         [Required]
+        [Range(typeof(DateTime), "1/1/1900", "1/1/2017", ErrorMessage = "Value for {0} must be between {1} and {2}")]
         public DateTime BirthDate { get; set; }
 
     
