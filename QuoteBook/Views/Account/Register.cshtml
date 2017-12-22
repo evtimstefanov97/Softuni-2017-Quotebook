@@ -1,0 +1,107 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<style>
+    .btn {
+        font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+        border: none;
+        border-radius: 300px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .btn-xl {
+        padding: 7px 15px;
+        background-color: #ee4b28;
+        border-color: #ed431f;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary.focus,
+    .btn-primary:active,
+    .btn-primary.active,
+    .open > .dropdown-toggle.btn-primary {
+        transition: all 0.4s ease-in-out;
+        color: white;
+        background-color: #ee4b28;
+        border-color: #ed431f;
+        text-shadow: 2px 2px 2px black;
+    }
+</style>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" enctype="multipart/form-data" method="post">
+            <h4>Create a new account.</h4>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <hr />
+            <label asp-for="Email"></label>
+
+            <div class="form-group input-group">
+                <input asp-for="Email" class="form-control" />
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+               
+            </div>
+     
+            <label asp-for="Name"></label>
+
+            <div class="form-group input-group">
+                <input asp-for="Name" class="form-control" />
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+               
+            </div>
+
+            <label asp-for="Password"></label>
+
+            <div class="form-group input-group">
+                <input asp-for="Password" class="form-control" />
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              
+            </div>
+
+            <label asp-for="ConfirmPassword"></label>
+
+            <div class="form-group input-group">
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock">
+
+                    </span>
+                </div>
+              
+            </div>
+
+            <label asp-for="DateOfBirth"></label>
+            <div class="form-group input-group date" data-provide="datepicker">
+
+                <input asp-for="DateOfBirth" type="text" class="form-control" />
+
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar">
+
+                    </span>
+                </div>
+
+              
+
+            </div>
+
+            <label asp-for="AvatarImage"></label>
+            <div class="form-group">
+                <label class="btn btn-dropbox" asp-for="AvatarImage" style="width:102px;height:32px;">
+                    <input asp-for="AvatarImage" type="file" accept=".png, .jpg, .jpeg" style="display:none"
+                           onchange="$('#upload-file-info').html(this.files[0].name)">
+                    <span class="glyphicon glyphicon-open-file" style="font-size:20px;color:white"></span>
+                </label>
+                <span class='label label-info' id="upload-file-info"></span>
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-primary btn-xl page-scroll">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

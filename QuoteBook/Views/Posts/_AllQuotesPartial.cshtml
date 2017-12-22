@@ -1,0 +1,95 @@
+﻿@using QuoteBook.Extensions;
+@using QuoteBook.Data.Models;
+@using System.Security.Claims;
+@using System.Linq;
+@using Microsoft.AspNetCore.Identity
+@using QuoteBook.Data.Models;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<QuoteBook.Services.PostsService.Models.PostsListingModel>
+
+
+
+    @foreach (var post in Model)
+            {
+        <div class="col-md-12 col-sm-12">
+            <article class="">
+                <h2>
+                    @post.Author.Name -
+                    @if (post.Author.AvatarImage?.Length > 0)
+                    {
+
+                        <img class="img-circle img-thumbnail" style="width:60px;height:60px" src="data:image;base64,@System.Convert.ToBase64String(post.Author.AvatarImage)" width="80" height="80" />
+
+                    }
+                    else if (post.Author.FacebookImageUrl?.Length > 0)
+                    {
+                        <img class="img-circle img-thumbnail" style="width:60px;height:60px" src="@post.Author.FacebookImageUrl" />
+
+                    }
+                </h2>
+                <p style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:15px;font-style:italic;text-indent:25px;color: #d94020;font-weight:bold;display:block;word-wrap:break-word;width:100%">@post.Quote</p>
+                <h4>Date: @($"{post.Created.DayOfWeek}, {post.Created.Month}/{post.Created.Day}/{post.Created.Year} {post.Created.Hour}:{post.Created.Minute}")</h4>
+                <h4>Inspirator: @(post.Inspirator != null ? post.Inspirator.Name : "missing")</h4>
+                <h4>Category: @(post.Category!=null?post.Category.Title:"missing category")</h4>
+                <h3>
+                    @if (post.Inspirator?.Image?.Length > 0)
+                    {
+
+                        <img src="data:image;base64,@System.Convert.ToBase64String(post.Inspirator.Image)" title="Inspirator Picture" alt="Inspirator Picture" class="img-rounded img-thumbnail" style="height:150px;width:120px" />
+
+
+                    }
+                </h3>
+                @if (User.IsInRole("Administrator") || (User.IsInRole("Author") && (post.Author.Id == User.FindFirstValue(ClaimTypes.NameIdentifier))))
+                {
+                    <div class="activate_@post.Id">
+                        <span class="glyphicon glyphicon-th-list" style="font-size:19px;"> Actions...</span>
+                    </div>
+                        <hr class='dropdownUpperLine_@post.Id' style="display:none;" />
+                        <div class="dropdownActions_@post.Id" style="display: none;">
+
+                            <a asp-action="Edit" asp-area="UserQuote" class="btn btn-default" asp-controller="Posts" asp-route-id="@post.Id">Edit</a>
+                            <a asp-action="Details" asp-area="UserQuote" class="btn btn-default" asp-controller="Posts" asp-route-id="@post.Id">Details</a>
+                            <a asp-action="Delete" asp-area="UserQuote" class="btn btn-default" asp-controller="Posts" asp-route-id="@post.Id">Delete</a>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a asp-action="UserQuotes" asp-area="UserQuote" class="btn btn-default" asp-controller="Posts" asp-route-userIdForAdminActions="@post.Author.Id">All quotes by user</a>
+                            }
+
+                            <br />
+
+                        </div>
+
+                        <br />
+                        <hr class='dropdownLowerLine_@post.Id' style="display:none;" />
+
+
+
+
+
+
+                }
+                @if (post.Likes.Any(l => l.UserId == this.User.GetUserId()))
+                {
+                    <span>
+                        <button class="glyphicon glyphicon-thumbs-down btn btn-default" id="like_@post.Id" style="color:black;font-size:15px;display:inline-block;background:white;font-weight:bold;">Like</button>
+                        <span class="glyphicon glyphicon-plus-sign">@post.Likes.Count</span>
+
+                    </span>
+                }
+                else
+                {
+
+                    <span>
+                        <button class="glyphicon glyphicon-thumbs-up btn btn-success" id="like_@post.Id" style="color:green;font-size:15px;display:inline-block;background:white;font-weight:bold;">Like</button>
+                        <span class="glyphicon glyphicon-plus-sign">@post.Likes.Count</span>
+
+                    </span>
+                }
+            </article>
+            <hr />
+        </div>
+
+
+    }

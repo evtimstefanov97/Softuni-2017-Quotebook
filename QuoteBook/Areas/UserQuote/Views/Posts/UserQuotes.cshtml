@@ -1,0 +1,139 @@
+﻿
+@using QuoteBook.Services.PostsService.Models
+@using QuoteBook.Data.Models;
+@using Microsoft.AspNetCore.Identity
+@using QuoteBook.Data.Models;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<PostsListingModel>
+@{
+    ViewData["Title"] = "My Quotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var user = User.IsInRole("Administrator") ? await UserManager.FindByIdAsync(TempData["userExternalId"].ToString()) : await UserManager.GetUserAsync(User);
+    var pictureUrl = user?.FacebookImageUrl;
+}
+
+@if (User.IsInRole("Administrator"))
+{<hr />
+    <div style="display:inline-block;">
+       
+        <span style="display:inline-block;font-size:18px;">Author: </span>
+        <h2  style="display:inline;">@user?.Name</h2>
+        @if (pictureUrl?.Length > 0)
+        {
+            <img class="img-circle img-thumbnail" style="width:60px;height:60px" src="@pictureUrl" />
+
+
+        }
+        else if (user?.AvatarImage?.Length > 0)
+        {
+
+            <img class="img-circle img-thumbnail" style="width:60px;height:60px" src="data:image;base64,@System.Convert.ToBase64String(user.AvatarImage)" width="80" height="80" />
+
+        }
+    </div>
+    <hr />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quote)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Likes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inspirator)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span style="width:400px;display:block;word-wrap:break-word;">
+                            @Html.DisplayFor(modelItem => item.Quote)
+                        </span>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Likes.Count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inspirator.Name)
+                    </td>
+                    <td style="width:240px;">
+                        <a asp-action="Edit"    class="btn btn-warning" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete"  class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <h2>My quotes</h2>
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quote)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Likes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inspirator)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span style="width:400px;display:block;word-wrap:break-word;">
+                            @Html.DisplayFor(modelItem => item.Quote)
+                        </span>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Likes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inspirator.Name)
+                    </td>
+                    <td style="width:240px;">
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+

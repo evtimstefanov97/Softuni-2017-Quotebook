@@ -1,0 +1,46 @@
+﻿@model QuoteBook.Services.PostsService.Models.PostEditDeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quote)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quote)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Author.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Inspirator)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Inspirator.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete"  asp-route-userIdForAdminActions="@Model.Author.Id">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="UserQuotes"  asp-route-userIdForAdminActions="@Model.Author.Id">Back to List</a>
+    </form>
+</div>

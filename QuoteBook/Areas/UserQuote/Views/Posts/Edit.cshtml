@@ -1,0 +1,44 @@
+﻿@model QuoteBook.Services.PostsService.Models.PostEditDeleteModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h2>Edit</h2>
+        <hr />
+        <form asp-action="EditConfirm" @if(User.IsInRole("Administrator")){@Html.Raw("asp-route-userIdForAdminActions="+@Model.Author.Id)}>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Quote" class="control-label"></label>
+                <textarea asp-for="Quote" class="form-control" rows="10" style="overflow-y:hidden;resize:none"></textarea>                <span asp-validation-for="Quote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category.Id" class="form-control" asp-items="ViewBag.Categories"></select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <label asp-for="Inspirator" class="control-label"></label>
+                <select asp-for="Inspirator.Id" class="form-control" asp-items="ViewBag.Inspirators"></select>
+                <span asp-validation-for="Inspirator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+        <div>
+            <a asp-action="UserQuotes" asp-route-userIdForAdminActions="@Model.Author.Id">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

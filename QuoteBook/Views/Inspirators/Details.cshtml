@@ -1,0 +1,48 @@
+﻿@model QuoteBook.Data.Models.Inspirator
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Inspirator</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            <p style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:25px;color:#d94020">@Html.DisplayFor(model => model.Name)</p>
+        </dd>
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd>
+            <p style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:25px;color:#d94020">@Model.BirthDate.Day/@Model.BirthDate.Month/@Model.BirthDate.Year</p>
+
+        </dd>
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+          
+            @if (Model.Image?.Length > 0)
+            {
+                <img class="img-rounded img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(Model.Image)" style="width:300px;height:350px" />
+
+            }
+       
+    </dl>
+  
+   
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

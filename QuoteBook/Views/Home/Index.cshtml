@@ -1,0 +1,79 @@
+﻿@using QuoteBook.Data.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link href="~/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+<!-- Plugin CSS -->
+<link href="~/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+<!-- Theme CSS -->
+<style>
+    .btn.btn-primary.btn-xl.page-scroll:hover {
+        text-shadow: 2px 2px 2px black;
+
+    }
+
+    body {
+        position: absolute;
+    }
+
+        body::before {
+            background-size: cover;
+            background-position: center center;
+            background-image: url('../img/header.jpg');
+            background-repeat: repeat-y;
+            background-attachment: fixed;
+            background-size: contain;
+            content: '';
+            z-index: -1;
+            width: 105%;
+            height: 105%;
+            position: fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+        }
+</style>
+<link href="~/css/creative.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="~/vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="~/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<!-- Theme JavaScript -->
+<script src="~/js/creative.min.js"></script>
+
+
+
+<body>
+   
+    <div class="header-content" style="top:150px; position: absolute;top: 50%;left:50%;transform: translate(-50%,-50%);">
+        <div class="header-content-inner" style="top:150px; position: absolute;top: 50%;left:50%;transform: translate(-50%,-50%);">
+            <h1 id="homeHeading" style="position:relative;bottom:45px;"><i>" Quotebook "</i></h1>
+            <hr style="position:relative;bottom:45px;"/>
+            <p style="font-weight:bold;color:white;background-color:black;top:150px;position:relative;width:950px">Feel free to share your favourite words of various famous people, authors etc!</p>
+
+
+            <br />
+            <br />
+            <br />
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <p style="top:350px;background-color:black; position: absolute;left:50%;transform: translate(-50%,-50%);">Don't have an account?</p>
+                <a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-primary btn-xl page-scroll" style="top:400px; position: absolute;left:50%;transform: translate(-50%,-50%);width:200px">Register for free!</a>
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-primary btn-xl page-scroll" style="top:470px; position: absolute;left:50%;transform: translate(-50%,-50%);width:200px">Log in</a>
+            }
+        </div>
+    </div>
+
+
+</body>

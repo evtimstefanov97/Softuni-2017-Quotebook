@@ -1,0 +1,294 @@
+﻿
+@using QuoteBook.Extensions;
+@using QuoteBook.Data.Models;
+@using System.Security.Claims;
+@using System.Linq;
+@using Microsoft.AspNetCore.Identity
+@using QuoteBook.Data.Models;
+@using QuoteBook.Services.CategoryService.Models;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<QuoteBook.Services.PostsService.Models.PostsListingModel>
+@{
+    ViewData["Title"] = "AllPosts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <style>
+        .glyphicon-thumbs-up:hover,
+        .glyphicon-thumbs-down:hover {
+            transition: all 0.3s ease-in-out;
+            transform: scale(1.1);
+        }
+
+        div > span.glyphicon.glyphicon-th-list {
+            cursor: pointer;
+        }
+    </style>
+    <h2>
+        All Quotes
+        @if (User.IsInRole(WebConstants.AuthorRole))
+        {
+            @Html.Raw(" - ")<a class="btn btn-success" style="display:inline-block;" asp-area="UserQuote" asp-controller="Posts" asp-action="Create">+ Add Quote</a>
+
+        }
+
+    </h2>
+    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>
+                    Author
+                    <a class="glyphicon glyphicon-arrow-up" id="orderByName" style="float:right;cursor:pointer"></a>
+                    <i class="glyphicon glyphicon-user" style="float:right"></i>
+                </th>
+                <th>
+                    Date
+                    <a class="glyphicon glyphicon-arrow-up" id="orderByDate" style="float:right;cursor:pointer"></a>
+                    <i class="glyphicon glyphicon-calendar" style="float:right"></i>
+                </th>
+                <th>
+                    Likes
+                    <a class="glyphicon glyphicon-arrow-up" id="orderByLikes" style="float:right;cursor:pointer"></a>
+                    <i class="glyphicon glyphicon-thumbs-up" style="float:right"></i>
+                </th>
+                <th style="width:350px">
+
+                    <p style="float:left;position:relative;top:10px">Category</p>
+                    <select asp-items=@(new SelectList((List<CategoryListingModel>)@ViewData["CategoriesForSort"], "Id", "Title")) value="All" class="selectpicker" style="float:right;margin-left:15px" data-live-search="true">
+                        <option selected="selected">All</option>
+                    </select>
+
+
+                </th>
+            </tr>
+        </thead>
+
+    </table>
+
+
+</div>
+<div class="row">
+@await Html.PartialAsync("_AllQuotesPartial");
+
+</div>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+<!-- Latest compiled and minified JavaScript -->
+
+<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.js"></script>
+<link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.css" />
+
+    <script>
+        $(document).ready(function () {
+            addSelectPickerActions()
+
+            var clicked = false;
+
+            addOrderButtonEffects()
+            likeAjaxCalls();
+            addToggleEffects();
+
+            debugger;
+
+            function addSelectPickerActions() {
+                $('select[class*=selectpicker').on('change', function (e) {
+
+                    var categoryTitle = $(this).find("option:selected").text();
+                selectPickerSort(categoryTitle)
+                })
+                debugger;
+                $('select[class*=selectpicker').selectpicker('render');
+              
+                $(".bootstrap-select").css('margin-left', '15px');
+                $('.selectpicker').selectpicker('val', 'All');
+            
+            }
+                function selectPickerSort(categoryTitle) {
+                $.ajax({
+                    url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Category" + "&type=" + categoryTitle ,
+                    type: 'POST',
+                    success: function (result) {
+                        debugger;
+                    
+                        $(".row").html(result);
+                        $('.row').css('padding-left', '0px');
+                      
+                        likeAjaxCalls();
+                        addToggleEffects();
+                    
+                        clicked = true;
+                        debugger;
+                        return;
+                    }
+                })
+
+            }
+            function addOrderButtonEffects() {
+
+                $('a[Id*=orderByName').on('click', function (e) {
+                    debugger;
+                    if (clicked == false) {
+                        $('#orderByName').attr('id', 'orderByNameDesc')
+                        $('#orderByNameDesc').attr('class', 'glyphicon glyphicon-arrow-down');
+
+                        $.ajax({
+                        url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Name"+"&type="+"Asc",
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            $('.row').css('padding-left', '0px');
+                            addSelectPickerActions()
+                            likeAjaxCalls();
+                            addToggleEffects();
+                            clicked = true;
+                            debugger;
+                            return;
+                        }
+                        });
+                    } else {
+
+                        $('#orderByNameDesc').attr('class', 'glyphicon glyphicon-arrow-up');
+                        $('#orderByNameDesc').attr('id', 'orderByName');
+                        $.ajax({
+                        url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Name"+"&type="+"Desc",
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            $('.row').css('padding-left', '0px');
+                            likeAjaxCalls();
+                            addSelectPickerActions()
+                            addToggleEffects();
+                            clicked = false;
+                            return;
+                        }
+
+                    });
+                    }
+                })
+                 $('a[Id*=orderByDate').on('click', function (e) {
+                    debugger;
+                    if (clicked == false) {
+                        $('#orderByDate').attr('id', 'orderByDateDesc')
+                        $('#orderByDateDesc').attr('class', 'glyphicon glyphicon-arrow-down');
+
+                        $.ajax({
+                            url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Date"+"&type="+"Asc",
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            $('.row').css('padding-left', '0px');
+                            likeAjaxCalls();
+                            addSelectPickerActions()
+                            addToggleEffects();
+                            clicked = true;
+                            debugger;
+                            return;
+                        }
+                        });
+                    } else {
+
+                        $('#orderByDateDesc').attr('class', 'glyphicon glyphicon-arrow-up');
+                        $('#orderByDateDesc').attr('id', 'orderByDate');
+                        $.ajax({
+                            url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Date"+"&type="+"Desc",
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            $('.row').css('padding-left', '0px');
+                            likeAjaxCalls();
+                            addSelectPickerActions()
+                            addToggleEffects();
+                            clicked = false;
+                            return;
+                        }
+
+                    });
+                    }
+                })
+                 $('a[Id*=orderByLikes').on('click', function (e) {
+                    debugger;
+                    if (clicked == false) {
+                        $('#orderByLikes').attr('id', 'orderByLikesDesc')
+                        $('#orderByLikesDesc').attr('class', 'glyphicon glyphicon-arrow-down');
+
+                        $.ajax({
+                            url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Likes"+"&type="+"Asc",
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            $('.row').css('padding-left', '0px');
+                            likeAjaxCalls();
+                            addSelectPickerActions()
+                            addToggleEffects();
+                            clicked = true;
+                            debugger;
+                            return;
+                        }
+                        });
+                    } else {
+                        $('#orderByLikesDesc').attr('class', 'glyphicon glyphicon-arrow-up');
+                        $('#orderByLikesDesc').attr('id', 'orderByLikes');
+                        $.ajax({
+                            url: '@Url.Action("AllQuotes", "Posts")' + "?orderColumn=" + "Likes"+"&type="+"Desc",
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            $('.row').css('padding-left', '0px');
+                            likeAjaxCalls();
+                            addSelectPickerActions()
+                            addToggleEffects();
+                            clicked = false;
+                            return 
+                        }
+
+                    });
+                    }
+                })
+            }
+
+            function likeAjaxCalls() {
+                debugger;
+                $('button[id*=like').on('click', function (e) {
+                    var postId = $(this).attr('id').split('_')[1];
+                    $.ajax({
+                        url: '@Url.Action("Like", "Likes")' + "?PostId=" + postId,
+                        type: 'POST',
+                        success: function (result) {
+                            debugger;
+                            $(".row").html(result);
+                            likeAjaxCalls();
+                            addSelectPickerActions()
+                            addToggleEffects();
+                            return;
+                        }
+
+                    });
+                });
+
+            }
+
+            function addToggleEffects() {
+                $('div[class*=activate').on('click', function (e) {
+                    var postId = $(this).attr('class').split('_')[1];
+                    $('.dropdownActions_' + postId).fadeToggle();
+                    $('.dropdownUpperLine_' + postId).fadeToggle();
+                    $('.dropdownLowerLine_' + postId).fadeToggle();
+                });
+            }
+
+        });
+    </script>
+
+}

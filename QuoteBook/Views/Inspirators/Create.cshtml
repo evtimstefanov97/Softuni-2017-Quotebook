@@ -1,0 +1,79 @@
+﻿@model QuoteBook.Services.InspiratorService.Models.InspiratorCreateEditServiceModel;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+
+
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary.focus,
+    .btn-primary:active,
+    .btn-primary.active,
+    .open > .dropdown-toggle.btn-primary {
+        transition: all 0.4s ease-in-out;
+        color: white;
+        background-color: #ee4b28;
+        border-color: #ed431f;
+        text-shadow: 2px 2px 2px black;
+    }
+</style>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h2>Create</h2>
+        <h4>Inspirator</h4>
+        <hr />
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <label asp-for="Name" class="control-label"></label>
+
+            <div class="form-group input-group">
+                <input asp-for="Name" class="form-control" />
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-user">
+
+                    </span>
+                </div>
+            </div>
+            <label asp-for="BirthDate"></label>
+            <div class="form-group input-group date" data-provide="datepicker">
+
+                <input asp-for="BirthDate" type="text" class="form-control" />
+
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar">
+
+                    </span>
+                </div>
+
+
+
+            </div>
+            <span asp-validation-for="Image" class="text-danger"></span>
+            <div class="form-group">
+                <label class="btn btn-dropbox" asp-for="Image" style="width:102px;height:32px;">
+                    <input asp-for="Image" type="file" required accept=".png, .jpg, .jpeg" style="display:none"
+                           onchange="$('#upload-file-info').html(this.files[0].name)">
+                    <span class="glyphicon glyphicon-open-file" style="font-size:20px;color:white"></span>
+                </label>
+                <span class='label label-info' id="upload-file-info"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

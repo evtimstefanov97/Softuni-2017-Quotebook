@@ -1,0 +1,8 @@
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\bin\Debug\QuoteBook.Common.dll
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\bin\Debug\QuoteBook.Common.pdb
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\bin\Debug\AutoMapper.dll
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\bin\Debug\AutoMapper.xml
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\obj\Debug\QuoteBook.Common.csprojResolveAssemblyReference.cache
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\obj\Debug\QuoteBook.Common.csproj.CoreCompileInputs.cache
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\obj\Debug\QuoteBook.Common.dll
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Common\obj\Debug\QuoteBook.Common.pdb

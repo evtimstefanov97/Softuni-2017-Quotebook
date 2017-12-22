@@ -1,0 +1,50 @@
+﻿@model QuoteBook.Areas.Quote.Models.AddPostViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h2>Post</h2>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Quote" class="control-label"></label>
+                <textarea asp-for="Quote" class="form-control" rows="10" style="overflow-y:hidden;resize:none"></textarea>
+                <span asp-validation-for="Quote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control selectpicker" data-live-search="true" asp-items="ViewBag.Categories"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="InspiratorId" class="control-label"></label>
+                <select asp-for="InspiratorId" class="form-control selectpicker" data-live-search="true" asp-items="ViewBag.Inspirators"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
+        </form>
+        <a asp-action="UserQuotes">Back to List</a>
+    </div>
+</div>
+<div>
+    
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <link rel="stylesheet" href="~/lib/bootstrap-select/dist/css/bootstrap-select.css" />
+    <script src="~/lib/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker({
+            });
+        })
+       
+    </script>
+}

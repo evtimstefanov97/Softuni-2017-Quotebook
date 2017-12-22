@@ -1,0 +1,65 @@
+﻿
+@using QuoteBook.Services.InspiratorService.Models;
+@using QuoteBook.Data.Models;
+@using Microsoft.AspNetCore.Identity
+@using QuoteBook.Data.Models;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<InspiratorListingModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h2>Index</h2>
+    @if (User.IsInRole("Administrator") || User.IsInRole("Author"))
+    {
+
+        <p>
+            <a asp-action="Create" class="btn btn-success">Create New</a>
+        </p>
+    }
+    @foreach (var inspirator in Model)
+    {
+        <div class="col-md-4 col-sm-6">
+            <article class="text-center">
+                <h2>@inspirator.Name</h2>
+                @Html.DisplayNameFor(model => inspirator.TimesQuoted): 
+                @Html.DisplayFor(model => inspirator.TimesQuoted)
+                <span>
+                  
+                    @if (inspirator.Image?.Length > 0)
+                    {
+                        <span>
+
+
+                            <img class="img-rounded img-thumbnail" src="data:image;base64,@System.Convert.ToBase64String(inspirator.Image)" style="width:300px;height:350px"/>
+                        </span>
+                    }
+                    else
+                    {
+                        <span>
+
+
+                            <img class="img-rounded img-thumbnail" src="~/img/nopicture.jpg" style="width:300px;height:350px" />
+                        </span>
+                    }
+                </span>
+                <div>
+
+
+                    @if (User.IsInRole("Administrator"))
+                {
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@inspirator.Id">Edit</a>@Html.Raw(" | ")
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@inspirator.Id">Details</a>@Html.Raw(" | ")
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@inspirator.Id">Delete</a>
+                    }
+                </div>
+            </article>
+            <hr />
+        </div>
+
+
+    }
+</div>

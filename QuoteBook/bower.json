@@ -1,0 +1,12 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "jquery-validation": "1.14.0",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "jquery": "2.2.0",
+    "bootstrap": "v3.3.7",
+    "bootstrap-datepicker": "v1.7.1",
+    "bootstrap-select": "v2.0.0-beta1"
+  }
+}

@@ -1,0 +1,57 @@
+﻿@model QuoteBook.Services.PostsService.Models.PostDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="col-md-4 col-md-offset-4">
+    <h2 style="font-weight:bold;display:inline-block">Details</h2>
+    <i style="display:inline-block;" class="glyphicon glyphicon-pencil"></i>
+    <hr style="border:1px solid black !important;filter:blur(1px)" />
+    <dl>
+        <dt style="font-size:30px;">
+            @Html.DisplayNameFor(model => model.Quote) :
+        </dt>
+
+        <dd style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:25px;font-style:italic;text-indent:25px;color: #d94020;font-weight:bold;">
+            <span style="display:block;word-wrap:break-word;width:200px;">...@Html.DisplayFor(model => model.Quote)</span>
+            <hr style="border:1px solid black !important;filter:blur(1px)"/>
+        
+           
+        </dd>
+        <dt style="font-size:20px;">
+            @Html.DisplayNameFor(model => model.InspiratorName) :
+        </dt>
+        <dd style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:25px;text-indent:25px;color: #d94020;font-weight:bold;">
+    
+            @Html.DisplayFor(model => model.InspiratorName)
+            @if (Model.InspiratorAvatar?.Length > 0)
+            {
+                
+                    <img src="data:image;base64,@System.Convert.ToBase64String(Model.InspiratorAvatar)" title="Inspirator Picture" alt="Inspirator Picture" class="img-rounded img-thumbnail" style="height:160px;" />
+                
+
+            }
+        </dd>
+        <hr style="border:1px solid black !important;filter:blur(1px)" />
+        <dt style="font-size:25px;">
+            @Html.DisplayNameFor(model => model.CategoryTitle) :
+        </dt>
+        <dd style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size:25px;text-indent:25px;color: #d94020;font-weight:bold;">
+            @Html.DisplayFor(model => model.CategoryTitle)
+            <hr style="border:1px solid black !important;filter:blur(1px)" />
+
+
+        </dd>
+     
+
+    </dl>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="UserQuotes" asp-route-userIdForAdminActions="@Model.Author.Id">Back to List</a>
+    </div>
+
+</div>
