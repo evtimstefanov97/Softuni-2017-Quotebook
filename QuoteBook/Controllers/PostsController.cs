@@ -17,14 +17,12 @@ namespace QuoteBook.Controllers
         private readonly QuoteBookDbContext context;
         private readonly UserManager<User> userManager;
         private readonly ICategoryService categoryservice;
-        private readonly IInspiratorService inspiratorService;
         private readonly IPostsService postsService;
-        public PostsController(QuoteBookDbContext context, UserManager<User> userManager, ICategoryService categoryService, IInspiratorService inspiratorService, IPostsService postsService)
+        public PostsController(QuoteBookDbContext context, UserManager<User> userManager, ICategoryService categoryService,IPostsService postsService)
         {
             this.context = context;
             this.userManager = userManager;
             this.categoryservice = categoryService;
-            this.inspiratorService = inspiratorService;
             this.postsService = postsService;
         }
  
