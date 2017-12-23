@@ -125,11 +125,25 @@ namespace QuoteBook.Areas.Quote.Controllers
         {
             var category = await this.categoryservice.FindCategoryAsync(model.Category.Id);
             var inspirator = await this.inspiratorService.FindInspiratorAsync(model.Inspirator.Id);
+
+            if (category == null
+                || inspirator == null 
+                || model.Author == null)
+            {
+                return BadRequest();
+            }
+
             var quote = model.Quote;
             var postId = model.Id;
             var author = model.Author;
 
-            await this.postsService.EditPostAsync(category,inspirator,quote,postId, author);
+            var success=await this.postsService.EditPostAsync(category,inspirator,quote,postId, author);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
+
             var externalUserId = TempData["userExternalId"].ToString();
 
             return RedirectToAction("UserQuotes", "Posts", new { userIdForAdminActions = externalUserId });
@@ -155,7 +169,13 @@ namespace QuoteBook.Areas.Quote.Controllers
 
         public async Task<IActionResult> DeleteConfirmed(string id,string userIdForAdminActions)
         {
-            await this.postsService.DeletePostAsync(id);
+
+            var success = await this.postsService.DeletePostAsync(id);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("UserQuotes","Posts",new { userIdForAdminActions = userIdForAdminActions });
         }

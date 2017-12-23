@@ -1,4 +1,5 @@
-﻿using QuoteBook.Services.AdminService.Models;
+﻿using QuoteBook.Data.Models;
+using QuoteBook.Services.AdminService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace QuoteBook.Services.AdminService
 {
     public interface IAdminUserService
     {
-        Task<IEnumerable<AdminUserListingServiceModel>> All(string adminId);
+        Task<IEnumerable<AdminUserListingServiceModel>> All();
+
+        Task<bool> ChangeUserRoleAsync(User user,string role);
     }
 }

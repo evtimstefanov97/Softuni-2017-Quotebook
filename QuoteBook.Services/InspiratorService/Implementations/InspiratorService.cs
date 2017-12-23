@@ -22,15 +22,22 @@ namespace QuoteBook.Services.InspiratorService.Implementations
         }
         public async Task<IEnumerable<InspiratorListingModel>> All()
         {
-            return await this.context.Inspirators.ProjectTo<InspiratorListingModel>().OrderBy(c=>c.TimesQuoted).ToListAsync();
+            return await this.context.Inspirators.ProjectTo<InspiratorListingModel>().OrderBy(c => c.TimesQuoted).ToListAsync();
         }
 
-        public async Task CreateInspiratorAsync(InspiratorCreateEditServiceModel model)
+        public async Task<bool> CreateInspiratorAsync(InspiratorCreateEditServiceModel model)
         {
+            if (model.Name == null
+                || model.BirthDate < new DateTime(1900, 1, 1)
+                || model.BirthDate > new DateTime(2017, 1, 1))
+            {
+                return false;
+            }
             var inspirator = new Inspirator();
             inspirator.Name = model.Name;
             inspirator.Posts = new List<Post>();
             inspirator.BirthDate = model.BirthDate;
+
             if (model.Image != null)
             {
                 using (var memoryStream = new MemoryStream())
@@ -41,12 +48,22 @@ namespace QuoteBook.Services.InspiratorService.Implementations
             }
             await this.context.Inspirators.AddAsync(inspirator);
             await this.context.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task EditInspiratorAsync(InspiratorCreateEditServiceModel model)
+        public async Task<bool> EditInspiratorAsync(InspiratorCreateEditServiceModel model)
         {
+            if (model.Name == null
+             || model.BirthDate < new DateTime(1900, 1, 1)
+             || model.BirthDate > new DateTime(2017, 1, 1))
+            {
+                return false;
+            }
+
             var inspirator = await this.context.Inspirators.FindAsync(model.Id);
             inspirator.Name = model.Name;
+
             if (model.Image != null)
             {
                 using (var memoryStream = new MemoryStream())
@@ -55,10 +72,11 @@ namespace QuoteBook.Services.InspiratorService.Implementations
                     inspirator.Image = memoryStream.ToArray();
                 }
             }
-         
-            await this.context.SaveChangesAsync();
-        }
 
+            await this.context.SaveChangesAsync();
+
+            return true;
+        }
         public async Task<Inspirator> FindInspiratorAsync(string inspiratorId)
         {
             return await this.context.Inspirators.FindAsync(inspiratorId);

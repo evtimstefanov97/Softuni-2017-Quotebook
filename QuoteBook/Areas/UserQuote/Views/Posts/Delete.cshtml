@@ -41,6 +41,6 @@
     <form asp-action="Delete"  asp-route-userIdForAdminActions="@Model.Author.Id">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="UserQuotes"  asp-route-userIdForAdminActions="@Model.Author.Id">Back to List</a>
+        <a href="javascript:history.go(-1)">Back to List</a>
     </form>
 </div>

@@ -6,13 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using QuoteBook.Constants;
 
 namespace QuoteBook.Areas.Quote.Models
 {
     public class AddPostViewModel:IMapFrom<Post>
     {
         [Required]
-        [MaxLength(500, ErrorMessage = "The quote's length is a maximum of 500 characters")]
+        [MaxLength(500, ErrorMessage = WebConstants.QuoteMaxLength)]
         public string Quote { get; set; }
 
         [Display(Name ="Inspirator")]

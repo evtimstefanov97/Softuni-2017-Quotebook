@@ -20,7 +20,7 @@ namespace QuoteBook.Data.Models
         public DateTime BirthDate { get; set; }
 
         public ICollection<Post> Posts { get; set; }
-        [Required]
+
         public byte[] Image { get; set; }
     }
 }

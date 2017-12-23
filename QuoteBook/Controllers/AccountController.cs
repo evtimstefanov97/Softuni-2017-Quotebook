@@ -16,6 +16,7 @@ using QuoteBook.Services;
 using QuoteBook.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using QuoteBook.Constants;
 
 namespace QuoteBook.Controllers
 {
@@ -417,7 +418,7 @@ namespace QuoteBook.Controllers
         {
             if (code == null)
             {
-                throw new ApplicationException("A code must be supplied for password reset.");
+                throw new ApplicationException(WebConstants.CodeMustBeAppliedForReset);
             }
             var model = new ResetPasswordViewModel { Code = code };
             return View(model);

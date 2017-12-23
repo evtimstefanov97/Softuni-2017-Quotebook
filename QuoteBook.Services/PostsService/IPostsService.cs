@@ -20,14 +20,13 @@ namespace QuoteBook.Services.PostsService
 
         Task<Post> FindPostAsync(string postId);
 
-        Task EditPostAsync(Category category,Inspirator inspirator,string quote,string postId, User author);
+        Task<bool> EditPostAsync(Category category,Inspirator inspirator,string quote,string postId, User author);
 
         Task<PostDetailsModel> FindPostDetailsAsync(string postId);
 
-        Task CreatePostAsync(User author,Category category,Inspirator inspirator,string quote);
+        Task<bool> CreatePostAsync(User author,Category category,Inspirator inspirator,string quote);
 
-        Task DeletePostAsync(string postId);
+        Task<bool> DeletePostAsync(string postId);
 
-        Task EditPostAsync(string postId);
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using QuoteBook.Web.Areas.Admin.Models.Users;
 using QuoteBook.Web.Infrastructure.Extentions;
 using QuoteBook.Services.AdminService;
+using QuoteBook.Constants;
 
 namespace QuoteBook.Areas.Admin.Controllers
 {
@@ -30,9 +31,8 @@ namespace QuoteBook.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await this.users.All(this.userManager.GetUserId(User));
-       
-         
+            var users = await this.users.All();
+
             return View(new AdminUserListingViewModel
             {
                 Users = users
@@ -48,17 +48,22 @@ namespace QuoteBook.Areas.Admin.Controllers
 
             if (!roleExists || !userExists)
             {
-                ModelState.AddModelError(string.Empty,WebConstants.InvalidIdentityDetailsOrUser);
+                ModelState.AddModelError(string.Empty, WebConstants.InvalidIdentityDetailsOrUser);
             }
 
             if (!ModelState.IsValid)
             {
-                RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            var roles = await this.userManager.GetRolesAsync(user);
 
-            await this.userManager.RemoveFromRolesAsync(user, roles);
-            await this.userManager.AddToRoleAsync(user, model.Role);
+            var role = model.Role;
+
+            var success = await this.users.ChangeUserRoleAsync(user, role);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
 
             TempData.AddSuccessMessage(String.Format(WebConstants.TempDataUserRoleSuccessfullChange, user.Name, model.Role));
 

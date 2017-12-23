@@ -14,24 +14,10 @@ namespace QuoteBook.Services.CategoryService.Implementations
     public class CategoryService : ICategoryService
     {
         private readonly QuoteBookDbContext context;
+
         public CategoryService(QuoteBookDbContext context)
         {
             this.context = context;
-        }
-
-        public Task CreateCategoryAsync(string Title)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteCategoryAsync(string categoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task EditCategory(string categoryId)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Category> FindCategoryAsync(string categoryId)

@@ -17,30 +17,34 @@ namespace QuoteBook.Services.LikesService.Implementations
             this.context = context;
         }
 
-        public async Task Like(string PostId, User user)
+        public async Task<bool> Like(string PostId, User user)
         {
 
             var post = await this.context.Posts.Include(p => p.Likes).FirstOrDefaultAsync(p => p.Id == PostId);
 
+            if (post == null || user == null)
+            {
+                return false;
+            }
             if (post.Likes.Any(l => l.User == user))
             {
                 post.Likes.Remove(post.Likes.Where(l => l.User == user).FirstOrDefault());
                 await context.SaveChangesAsync();
-                return;
-            }
-            else
-            {
-               
-                var like = new Like()
-                {
-                    Post = post,
-                    User = user
-                };
-                await context.Likes.AddAsync(like);
-                post.Likes.Add(like);
-                context.SaveChanges();
+
+                return true;
             }
 
+            var like = new Like()
+            {
+                Post = post,
+                User = user
+            };
+
+            await context.Likes.AddAsync(like);
+            post.Likes.Add(like);
+            context.SaveChanges();
+
+            return true;
         }
     }
 }

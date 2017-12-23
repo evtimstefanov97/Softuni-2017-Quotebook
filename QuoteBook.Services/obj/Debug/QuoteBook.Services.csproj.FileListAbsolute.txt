@@ -146,3 +146,8 @@ C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.Asp
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.AspNetCore.Http.Features.xml
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.xml
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.dll
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.xml
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Microsoft.Extensions.Identity.Core.xml
+C:\Users\Evtim\source\repos\QuoteBook\QuoteBook.Services\bin\Debug\Z.Linq.Async.dll

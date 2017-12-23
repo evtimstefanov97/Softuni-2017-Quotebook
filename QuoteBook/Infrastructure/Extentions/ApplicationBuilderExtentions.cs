@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Builder;
 using QuoteBook.Data;
 using QuoteBook.Data.Models;
+using QuoteBook.Constants;
 
 namespace QuoteBook.Web.Infrastructure.Extentions
 {

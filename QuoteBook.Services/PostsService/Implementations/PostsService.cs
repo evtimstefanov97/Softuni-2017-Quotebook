@@ -11,6 +11,7 @@ using AutoMapper.QueryableExtensions;
 using System.Reflection;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace QuoteBook.Services.PostsService.Implementations
 {
@@ -35,7 +36,6 @@ namespace QuoteBook.Services.PostsService.Implementations
             Expression<Func<Post, object>> orderExpression;
             Expression<Func<Post, bool>> sortExpression = (x => x.Category.Title == type);
 
-
             switch (column)
             {
                 case "Date":
@@ -55,8 +55,6 @@ namespace QuoteBook.Services.PostsService.Implementations
                     orderExpression = (x => x.Created);
                     break;
             }
-
-
             if (type == "Asc")
             {
                 var ordered = this.context.Posts.Include(p => p.Likes).OrderBy(orderExpression);
@@ -70,13 +68,15 @@ namespace QuoteBook.Services.PostsService.Implementations
 
             else
             {
-
                 return await this.context.Posts.Include(p => p.Likes).Where(sortExpression).ProjectTo<PostsListingModel>().ToListAsync();
-
             }
         }
-        public async Task CreatePostAsync(User author, Category category, Inspirator inspirator, string quote)
+        public async Task<bool> CreatePostAsync(User author, Category category, Inspirator inspirator, string quote)
         {
+            if(author == null || category == null || inspirator == null)
+            {
+                return false;
+            }
             Post post = new Post();
             post.Author = author;
             post.Category = category;
@@ -87,29 +87,41 @@ namespace QuoteBook.Services.PostsService.Implementations
 
             await this.context.Posts.AddAsync(post);
             await this.context.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task DeletePostAsync(string postId)
+        public async Task<bool> DeletePostAsync(string postId)
         {
             var post = await this.context.Posts.FindAsync(postId);
-            this.context.Posts.Remove(post);
-            await this.context.SaveChangesAsync();
-        }
+            if (post == null)
+            {
+                return false;
+            }
 
-        public async Task EditPostAsync(string postId)
-        {
-            var post = await this.context.Posts.FindAsync(postId);
             this.context.Posts.Remove(post);
             await this.context.SaveChangesAsync();
+
+            return true;
         }
-        public async Task EditPostAsync(Category category, Inspirator inspirator, string quote, string postId, User author)
+        public async Task<bool> EditPostAsync(Category category, Inspirator inspirator, string quote, string postId, User author)
         {
             var post = await this.context.Posts.FirstOrDefaultAsync(p => p.Id == postId);
+
+            if(post==null || category == null 
+                || inspirator == null 
+                || quote.Length>600 || author == null)
+            {
+                return false;
+            }
             post.Author = author;
             post.Category = category;
             post.Quote = quote;
             post.Inspirator = inspirator;
+
             await context.SaveChangesAsync();
+
+            return true;
         }
         public async Task<PostDetailsModel> FindPostDetailsAsync(string postId)
         {

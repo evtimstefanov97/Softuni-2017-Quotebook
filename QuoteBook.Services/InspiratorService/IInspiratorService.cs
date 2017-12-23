@@ -15,9 +15,8 @@ namespace QuoteBook.Services.InspiratorService
 
         Task<Inspirator> FindInspiratorAsync(string inspiratorId);
 
+        Task<bool> EditInspiratorAsync(InspiratorCreateEditServiceModel model);
 
-        Task EditInspiratorAsync(InspiratorCreateEditServiceModel model);
-
-        Task CreateInspiratorAsync(InspiratorCreateEditServiceModel model);
+        Task<bool> CreateInspiratorAsync(InspiratorCreateEditServiceModel model);
     }
 }

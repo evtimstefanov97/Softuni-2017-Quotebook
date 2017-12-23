@@ -13,11 +13,5 @@ namespace QuoteBook.Services.CategoryService
         Task<IEnumerable<CategoryListingModel>> All();
 
         Task<Category> FindCategoryAsync(string categoryId);
-
-        Task CreateCategoryAsync(string Title);
-
-        Task DeleteCategoryAsync(string categoryId);
-
-        Task EditCategory(string categoryId);
     }
 }

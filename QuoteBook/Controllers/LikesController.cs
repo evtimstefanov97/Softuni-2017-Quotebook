@@ -27,9 +27,14 @@ namespace QuoteBook.Controllers
         public async Task<IActionResult> Like(string PostId, [Bind("PostId")] LikeViewModel model)
         {
             var user = await this.userManager.GetUserAsync(User);
-            
-        
-            await likesService.Like(model.PostId, user);
+                   
+            var success=await likesService.Like(model.PostId, user);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
+
             return RedirectToAction("AllQuotes","Posts",new { orderColumn = "Likes", type = "Asc" });
         }
     }

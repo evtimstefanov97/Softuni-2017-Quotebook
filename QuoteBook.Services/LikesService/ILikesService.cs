@@ -9,6 +9,6 @@ namespace QuoteBook.Services.LikesService
 {
     public interface ILikesService
     {
-        Task Like(string PostId, User user);
+        Task<bool> Like(string PostId, User user);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace QuoteBook
+namespace QuoteBook.Constants
 {
     public class WebConstants
     {
@@ -33,6 +33,9 @@ namespace QuoteBook
         public const string UserLoggedInWithProvider = "User logged in with {Name} provider.";
         public const string ErrorLoadingExternalLoginInformation = "Error loading external login information during confirmation.";
         public const string UserCreatedAccountWithProvider = "User created an account using {Name} provider.";
+        public const string QuoteMaxLength = "The quote's length is a maximum of 500 characters";
+        public const string InspiratorBirthDateRangeError = "Value for {0} must be between {1} and {2}";
+        public const string CodeMustBeAppliedForReset = "A code must be supplied for password reset.";
         public const string AdminArea = "Admin";
     }
 }

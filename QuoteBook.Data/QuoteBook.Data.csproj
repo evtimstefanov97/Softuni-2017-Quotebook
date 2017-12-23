@@ -60,22 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataSeeder.cs" />
-    <Compile Include="Migrations\20171221003836_Initial.cs" />
-    <Compile Include="Migrations\20171221003836_Initial.designer.cs">
-      <DependentUpon>20171221003836_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20171221004852_Second.cs" />
-    <Compile Include="Migrations\20171221004852_Second.designer.cs">
-      <DependentUpon>20171221004852_Second.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20171221101124_ForeignKeySetNulLDeleteTryFix.cs" />
-    <Compile Include="Migrations\20171221101124_ForeignKeySetNulLDeleteTryFix.designer.cs">
-      <DependentUpon>20171221101124_ForeignKeySetNulLDeleteTryFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20171222100228_InspiratorBirthday.cs" />
-    <Compile Include="Migrations\20171222100228_InspiratorBirthday.designer.cs">
-      <DependentUpon>20171222100228_InspiratorBirthday.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\QuoteBookDbContextModelSnapshot.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Inspirator.cs" />
